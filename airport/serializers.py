@@ -83,6 +83,8 @@ class TicketDetailSerializer(TicketListSerializer):
 
 
 class CrewSerializer(serializers.ModelSerializer):
+    flight = FlightDetailSerializer(read_only=False, many=True)
+
     class Meta:
         model = Crew
-        fields = ("first_name", "last_name", "flight")
+        fields = ("id", "first_name", "last_name", "flight")
