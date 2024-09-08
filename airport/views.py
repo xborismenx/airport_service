@@ -55,7 +55,12 @@ class TicketViewSet(viewsets.ModelViewSet):
 
 class FlightViewSet(viewsets.ModelViewSet):
     queryset = Flight.objects.all()
-    serializer_class = FlightSerializer
+    serializer_class = FlightListSerializer
+
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return FlightDetailSerializer
+        return FlightListSerializer
 
 
 class CrewViewSet(viewsets.ModelViewSet):
