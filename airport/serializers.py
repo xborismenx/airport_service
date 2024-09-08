@@ -44,7 +44,9 @@ class AirplaneDetailSerializer(AirplaneListSerializer):
         fields = ("id", "name", "rows", "seats_in_row", "airplane_type")
 
 
-class OrderSerializer(serializers.ModelSerializer):
+class OrderListSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source="user.username")
+
     class Meta:
         model = Order
         fields = ("created_at", "user")
