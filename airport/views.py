@@ -45,7 +45,12 @@ class OrderViewSet(viewsets.ModelViewSet):
 
 class TicketViewSet(viewsets.ModelViewSet):
     queryset = Ticket.objects.all()
-    serializer_class = TicketSerializer
+    serializer_class = TicketListSerializer
+
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return TicketDetailSerializer
+        return TicketListSerializer
 
 
 class FlightViewSet(viewsets.ModelViewSet):
