@@ -50,6 +50,21 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = ("created_at", "user")
 
 
+class FlightListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Flight
+        fields = ("id", "route", "airplane", "departure_time", "arrival_time")
+
+
+class FlightDetailSerializer(serializers.ModelSerializer):
+    route = RouteDetailSerializer()
+    airplane = AirplaneDetailSerializer()
+
+    class Meta:
+        model = Flight
+        fields = ("id", "route", "airplane", "departure_time", "arrival_time")
+
+
 class TicketSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
