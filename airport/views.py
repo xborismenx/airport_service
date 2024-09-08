@@ -40,7 +40,7 @@ class AirplaneViewSet(viewsets.ModelViewSet):
 
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
-    serializer_class = OrderSerializer
+    serializer_class = OrderListSerializer
 
 
 class TicketViewSet(viewsets.ModelViewSet):
