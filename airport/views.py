@@ -14,7 +14,7 @@ class AirportViewSet(viewsets.ModelViewSet):
 
 
 class RouteViewSet(viewsets.ModelViewSet):
-    queryset = Route.objects.all()
+    queryset = Route.objects.select_related('source', 'destination')
     serializer_class = RouteListSerializer
 
     def get_serializer_class(self):
@@ -44,7 +44,7 @@ class OrderViewSet(viewsets.ModelViewSet):
 
 
 class TicketViewSet(viewsets.ModelViewSet):
-    queryset = Ticket.objects.all()
+    queryset = Ticket.objects.all().select_related("flight__route__source", "flight__route__destination", "order__user")
     serializer_class = TicketListSerializer
 
     def get_serializer_class(self):
@@ -54,7 +54,7 @@ class TicketViewSet(viewsets.ModelViewSet):
 
 
 class FlightViewSet(viewsets.ModelViewSet):
-    queryset = Flight.objects.all()
+    queryset = Flight.objects.all().select_related("route__destination")
     serializer_class = FlightListSerializer
 
     def get_serializer_class(self):
