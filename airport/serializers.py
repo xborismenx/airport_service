@@ -53,6 +53,9 @@ class OrderListSerializer(serializers.ModelSerializer):
 
 
 class FlightListSerializer(serializers.ModelSerializer):
+    route = serializers.IntegerField(source="route.id", read_only=True)
+    airplane = serializers.IntegerField(source="airplane.id", read_only=True)
+
     class Meta:
         model = Flight
         fields = ("id", "route", "airplane", "departure_time", "arrival_time")
@@ -68,6 +71,9 @@ class FlightDetailSerializer(serializers.ModelSerializer):
 
 
 class TicketListSerializer(serializers.ModelSerializer):
+    flight = serializers.IntegerField(source="flight.id")
+    order = serializers.IntegerField(source="order.id")
+
     class Meta:
         model = Ticket
         fields = ("id", "row", "seat", "flight", "order",)
