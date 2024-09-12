@@ -16,8 +16,8 @@ class RouteListSerializer(serializers.ModelSerializer):
 
 
 class RouteDetailSerializer(RouteListSerializer):
-    source = AirportSerializer(read_only=False)
-    destination = AirportSerializer(read_only=False)
+    source = AirportSerializer(read_only=True)
+    destination = AirportSerializer(read_only=True)
 
     class Meta:
         model = Route
