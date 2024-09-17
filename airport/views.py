@@ -1,12 +1,11 @@
-from django.shortcuts import render
 from rest_framework import viewsets
 
 from airport.models import Airport, Route, AirplaneType, Airplane, Order, Ticket, Flight, Crew
 from airport.permissions import IsAdminOrIfAuthenticatedReadOnly
 from airport.serializers import (AirportSerializer, RouteListSerializer, AirplaneTypeSerializer, AirplaneListSerializer,
-                                 TicketListSerializer, FlightListSerializer, CrewSerializer, RouteDetailSerializer,
+                                 TicketListSerializer, FlightListSerializer, CrewListSerializer, RouteDetailSerializer,
                                  AirplaneDetailSerializer, OrderListSerializer, TicketDetailSerializer,
-                                 FlightDetailSerializer)
+                                 FlightDetailSerializer, CrewDetailSerializer)
 
 
 class AirportViewSet(viewsets.ModelViewSet):
@@ -58,8 +57,8 @@ class TicketViewSet(viewsets.ModelViewSet):
 
 
 class FlightViewSet(viewsets.ModelViewSet):
-    queryset = Flight.objects.all().select_related("route__destination")
-    serializer_class = FlightListSerializer
+    queryset = Flight.objects.all().select_related("route__destination", "airplane")
+    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
     def get_serializer_class(self):
         if self.action == 'retrieve':
