@@ -68,5 +68,10 @@ class FlightViewSet(viewsets.ModelViewSet):
 
 
 class CrewViewSet(viewsets.ModelViewSet):
-    queryset = Crew.objects.all()
-    serializer_class = CrewSerializer
+    queryset = Crew.objects.all().prefetch_related("flight__route__destination")
+    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
+
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return CrewDetailSerializer
+        return CrewListSerializer
