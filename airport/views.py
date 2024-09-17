@@ -42,7 +42,7 @@ class AirplaneViewSet(viewsets.ModelViewSet):
 
 
 class OrderViewSet(viewsets.ModelViewSet):
-    queryset = Order.objects.all()
+    queryset = Order.objects.all().select_related("user")
     serializer_class = OrderListSerializer
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
