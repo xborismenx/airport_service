@@ -1,5 +1,9 @@
+import os
+import uuid
+
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils.text import slugify
 
 from airport_service import settings
 
@@ -63,7 +67,14 @@ class Flight(models.Model):
         return f"{self.route.__str__()} - {self.airplane.name} time ({self.departure_time} - {self.arrival_time})"
 
 
+def member_picture_file_path(instance, filename):
+    _, extension = os.path.splitext(filename)
+    filename = f"{slugify(instance.first_name)}_{slugify(instance.last_name)}_{uuid.uuid4()}{extension}"
+    return os.path.join("crews/", filename)
+
+
 class Crew(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
+    picture_member = models.ImageField(upload_to=member_picture_file_path, default="not exist yet")
     flight = models.ManyToManyField(Flight)
