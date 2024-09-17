@@ -88,9 +88,17 @@ class TicketDetailSerializer(serializers.ModelSerializer):
         fields = ("id", "row", "seat", "flight", "order")
 
 
-class CrewSerializer(serializers.ModelSerializer):
+class CrewListSerializer(serializers.ModelSerializer):
+    flight = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+
+    class Meta:
+        model = Crew
+        fields = ("id", "first_name", "last_name", "flight", 'picture_member')
+
+
+class CrewDetailSerializer(serializers.ModelSerializer):
     flight = FlightDetailSerializer(read_only=False, many=True)
 
     class Meta:
         model = Crew
-        fields = ("id", "first_name", "last_name", "flight")
+        fields = ("id", "first_name", "last_name", "flight", "picture_member")
