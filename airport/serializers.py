@@ -45,11 +45,11 @@ class AirplaneDetailSerializer(serializers.ModelSerializer):
 
 
 class OrderListSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(source="user.username")
+    customer = serializers.CharField(source="user.email")
 
     class Meta:
         model = Order
-        fields = ("created_at", "user")
+        fields = ("created_at", "customer")
 
 
 class FlightListSerializer(serializers.ModelSerializer):
