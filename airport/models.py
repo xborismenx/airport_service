@@ -76,5 +76,5 @@ def member_picture_file_path(instance, filename):
 class Crew(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    picture_member = models.ImageField(upload_to=member_picture_file_path, default="not exist yet")
+    picture_member = models.ImageField(upload_to=member_picture_file_path, null=True)
     flight = models.ManyToManyField(Flight)
