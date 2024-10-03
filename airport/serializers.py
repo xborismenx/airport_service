@@ -2,6 +2,8 @@ from rest_framework import serializers
 
 from airport.models import Airport, Route, Airplane, AirplaneType, Order, Ticket, Flight, Crew
 
+FORMAT_TIME = "%Y-%m-%d %H:%M:%S"
+
 
 class AirportSerializer(serializers.ModelSerializer):
     class Meta:
@@ -46,6 +48,7 @@ class AirplaneDetailSerializer(serializers.ModelSerializer):
 
 class OrderListSerializer(serializers.ModelSerializer):
     customer = serializers.CharField(source="user.email")
+    created_at = serializers.DateTimeField(FORMAT_TIME)
 
     class Meta:
         model = Order
@@ -55,6 +58,8 @@ class OrderListSerializer(serializers.ModelSerializer):
 class FlightListSerializer(serializers.ModelSerializer):
     route = serializers.IntegerField(source="route.id", read_only=True)
     airplane = serializers.IntegerField(source="airplane.id", read_only=True)
+    departure_time = serializers.DateTimeField(FORMAT_TIME)
+    arrival_time = serializers.DateTimeField(FORMAT_TIME)
 
     class Meta:
         model = Flight
@@ -64,6 +69,8 @@ class FlightListSerializer(serializers.ModelSerializer):
 class FlightDetailSerializer(serializers.ModelSerializer):
     route = RouteDetailSerializer()
     airplane = AirplaneDetailSerializer()
+    departure_time = serializers.DateTimeField(FORMAT_TIME)
+    arrival_time = serializers.DateTimeField(FORMAT_TIME)
 
     class Meta:
         model = Flight
