@@ -22,7 +22,7 @@ class Route(models.Model):
     distance = models.IntegerField()
 
     def __str__(self):
-        return f"{self.source.name} - {self.destination.name} {self.destination}"
+        return f"{self.source.name} - {self.destination.name} {self.destination.closest_big_city}"
 
 
 class AirplaneType(models.Model):
@@ -47,7 +47,7 @@ class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.created_at} - {self.user.username}"
+        return f"{self.created_at} - {self.user.email}"
 
 
 class Ticket(models.Model):
@@ -64,7 +64,7 @@ class Flight(models.Model):
     arrival_time = models.DateTimeField()
 
     def __str__(self):
-        return f"{self.route.__str__()} - {self.airplane.name} time ({self.departure_time} - {self.arrival_time})"
+        return f"{self.route.source.name} - {self.route.destination.name} ({self.route.destination.closest_big_city}) - {self.airplane.name} time ({self.departure_time} - {self.arrival_time})"
 
 
 def member_picture_file_path(instance, filename):
